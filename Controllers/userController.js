@@ -39,11 +39,20 @@ exports.loginController = async(req,res)=>{
                 const token = jwt.sign({userId:existingUser._id}, process.env.JWTPASSWORD)
                 res.status(200).json({user:existingUser,token})
             }
+            else{
+                res.status(404).json("Invalid Email/Password")
+                console.log("password mismatch");
+                
+            }
         }else{
-            res.status(404).json("Invalid Email/Password")
+            res.status(404).json("User doesn't exist. Please register!!")
+            console.log("error 404");
+            
+            
         }
     } catch (err) {
         res.status(401).json(err)
+        console.log("error 401");
     }
     
 }

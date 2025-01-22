@@ -6,6 +6,7 @@ const savedEventsSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    // storing event id of saved events by the user
     savedEvents:{
         type:Array,
         required:true

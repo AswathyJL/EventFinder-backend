@@ -26,8 +26,8 @@ router.get('/user-details/:id',jwtMiddleware, userController.getUserDetailsByIdC
 // add-event
 router.post("/add-events",jwtMiddleware,eventController.addEventController)
 
-// add-event
-router.put("/events/:id/edit",jwtMiddleware,eventController.addEventController)
+// edit-event
+router.put("/events/:id/edit",jwtMiddleware,eventController.editEventsController)
 
 // get home events
 router.get("/home-events",eventController.getHomeEventsController)
@@ -40,5 +40,11 @@ router.get("/user-events",jwtMiddleware,eventController.getUserEventsController)
 
 // get event by id
 router.get("/:id/event",jwtMiddleware,eventController.getEventDetailsController)
+
+// remove event by id /:id/remove
+router.delete("/:id/remove",jwtMiddleware,eventController.removeEventController)
+
+// save event
+router.post("/save-event",jwtMiddleware,savedEventsController.saveEventController)
 
 module.exports = router

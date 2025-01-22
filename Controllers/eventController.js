@@ -91,8 +91,7 @@ exports.editEventsController = async (req,res)=>{
     const userId = req.userId
     const { eventName,eventDescription,eventWebsite,startDate,endDate,startTime,endTime,location_city,location_state,location_link,maxRegistrationCount,isFree,entryFee,paymentMode,audienceType,eventType,tags} = req.body
     try{
-        const updateEvent = await events.findByIdAndUpdate({_id:id},{eventName,eventDescription,eventWebsite,startDate,endDate,startTime,endTime,location_city,location_state,location_link,maxRegistrationCount,isFree,entryFee,paymentMode,audienceType,eventType,tags,userId})
-        await updateProject.save()
+        const updateEvent = await events.findByIdAndUpdate(id,{eventName,eventDescription,eventWebsite,startDate,endDate,startTime,endTime,location_city,location_state,location_link,maxRegistrationCount,isFree,entryFee,paymentMode,audienceType,eventType,tags,userId},{ new: true })
         res.status(200).json(updateEvent)
     }catch(err){
         res.status(401).json(err)
