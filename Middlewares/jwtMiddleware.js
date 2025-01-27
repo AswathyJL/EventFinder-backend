@@ -13,13 +13,13 @@ const jwtMiddleware = (req,res,next)=>{
     }
 
     const token = authHeader.split(' ')[1];
-    console.log(token);
+    // console.log(token);
     
 
     if(token){
         try {
             const jwtResponse = jwt.verify(token, process.env.JWTPASSWORD)
-            console.log(jwtResponse);
+            // console.log(jwtResponse);
             
             req.userId = jwtResponse.userId
             next()
