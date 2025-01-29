@@ -88,18 +88,28 @@ exports.deleteSavedEventsByIdController = async (req, res) =>{
 exports.deleteAllSavedEventsController = async (req, res) =>{
     console.log("Inside deleteAllSavedEventsController");
     const userId = req.userId
+    console.log(userId);
+    
 
     try {
-        const userSavedEvents = await savedEvent.deleteOne({ userId });
-        if (!userSavedEvents) {
+        
+        const userSavedEvents = await savedEvent.findOneAndDelete({userId:userId});
+        
+        console.log(userSavedEvents);
+        
+        if (!userSavedEvents ) {
+            console.log(`404`);
+            
             return res.status(404).json({ message: "No saved events found for this user" });
         }
 
         // userSavedEvents.savedEvents = []; // Clear all saved events
         // await userSavedEvents.save();
 
-        return res.status(200).json({ message: "All saved events have been deleted" });
-    } catch (err) {
+        return res.status(200).json({ message: "All saved events have been deleted from the collection" });
+    }
+    
+     catch (err) {
         console.log(err);
         return res.status(401).json(err)
     }
