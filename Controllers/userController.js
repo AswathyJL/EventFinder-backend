@@ -60,10 +60,10 @@ exports.loginController = async(req,res)=>{
 // get user details
 exports.getUserDetailsController = async(req,res)=>{
     console.log('Inside getUserDetailsController');
-    const {userId} = req.userId
+    const userId = req.userId
 
     try {
-        const userDetails = await users.find({userId})
+        const userDetails = await users.find({_id:userId})
         res.status(200).json(userDetails)
     } catch (err) {
         res.status(401).json(err)

@@ -10,7 +10,7 @@ const appliedEventSchema = new mongoose.Schema({
         {
             userId:{
                 type:String,
-                default:"guest user"
+                required:true
             },
             username:{
                 type:String,
@@ -22,6 +22,10 @@ const appliedEventSchema = new mongoose.Schema({
             },
             phoneNo:{
                 type:String,
+                required:true
+            },
+            ticketCount:{
+                type:Number,
                 required:true
             },
             appliedAt:{

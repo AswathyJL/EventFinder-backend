@@ -54,6 +54,9 @@ router.post("/save-event/view",jwtMiddleware,savedEventsController.getSavedEvent
 router.post("/remove-saved-event",jwtMiddleware,savedEventsController.deleteSavedEventsByIdController)
 
 // delete all saved events
+router.delete("/remove-all-saved-events",jwtMiddleware,savedEventsController.deleteAllSavedEventsController)
+
+// apply for event
+router.post("/apply-event",jwtMiddleware,appliedEventController.applyEventController)
 
 module.exports = router
-router.delete("/remove-all-saved-events",jwtMiddleware,savedEventsController.deleteAllSavedEventsController)
