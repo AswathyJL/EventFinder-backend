@@ -36,4 +36,37 @@ exports.applyEventController = async (req,res)=>{
 
 // get applied events
 
-// unapply event
+// check if applied or not by current user
+exports.checkApplyStatusController = async (req,res)=>{
+    console.log("Inside checkApplyStatusController");
+    const id = req.params.id
+    const userId = req.userId
+    try {
+        // console.log("inside try");
+        
+        const existingEvent = await appliedEvents.findOne({eventId:id})
+        if(existingEvent)
+        {
+            // console.log("event existing");
+            
+            const alreadyApplied = existingEvent.registeredUser.some(user => user.userId === userId );
+
+            if (alreadyApplied) {
+                console.log("User has already applied.");
+                return res.status(200).json("You have already applied for this event");
+            }
+
+            console.log("not applied");
+            return res.status(406).json(existingEvent);
+        }
+        else{
+            res.status(404).json("not applied")
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(401).json(err)
+    }
+    
+}
+
+// unapply event by id

@@ -59,4 +59,6 @@ router.delete("/remove-all-saved-events",jwtMiddleware,savedEventsController.del
 // apply for event
 router.post("/apply-event",jwtMiddleware,appliedEventController.applyEventController)
 
+// check apply status of event
+router.get("/event/:id/status",jwtMiddleware,appliedEventController.checkApplyStatusController)
 module.exports = router
