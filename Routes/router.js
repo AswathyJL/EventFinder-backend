@@ -61,4 +61,8 @@ router.post("/apply-event",jwtMiddleware,appliedEventController.applyEventContro
 
 // check apply status of event
 router.get("/event/:id/status",jwtMiddleware,appliedEventController.checkApplyStatusController)
+
+// cancel registration/unapply event
+router.post("/apply-event/:id/remove",jwtMiddleware,appliedEventController.cancelRegistrationController)
+
 module.exports = router
