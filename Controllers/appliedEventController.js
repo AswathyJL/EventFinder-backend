@@ -39,7 +39,7 @@ exports.getUserAppliedEvents = async (req, res) => {
     try {
         console.log("Inside getUserAppliedEvents Controller");
 
-        const userId = req.params.userId;
+        const userId = req.userId;
         console.log("User ID:", userId);
 
         // Find events where the user exists in the `registeredUser` array
@@ -58,6 +58,29 @@ exports.getUserAppliedEvents = async (req, res) => {
         return res.status(500).json({ message: "Internal server error", error });
     }
 };
+
+// get all applicant details
+exports.getApplicationDetails = async (req, res) => {
+        console.log("Inside getApplicationDetails Controller");
+
+        const eventId = req.params.id
+        console.log(eventId);
+        
+        try {
+            const allAppliedUsers = await appliedEvents.findOne({eventId:eventId})
+            if (!allAppliedUsers || allAppliedUsers.registeredUser.length === 0) {
+                console.log('no users');
+                
+                return res.status(404).json({ message: "No applicant details found for this event" });
+            }
+            return res.status(200).json(allAppliedUsers)
+        } 
+        catch (err) {
+            console.log(err);
+            return res.status(401).json(err)
+        }
+    }
+
 
 // check if applied or not by current user
 exports.checkApplyStatusController = async (req,res)=>{
@@ -123,6 +146,31 @@ exports.cancelRegistrationController = async (req,res)=>{
         }
         await existingEvent.save()
         return res.status(200).json(existingEvent)
+    } catch (err) {
+        console.log(err);
+        return res.status(401).json(err)
+    }
+}
+
+exports.removeAnApplicantController = async (req,res)=>{
+    console.log("Inside removeAnApplicantController");
+    const eventId = req.params.id
+    const {email} = req.body
+    try {
+        let allAppliedEvents = await appliedEvents.findOne({eventId})
+        if (!allAppliedEvents) {
+            return res.status(404).json({ message: "No saved events found for this user" });
+        }
+        if(allAppliedEvents.registeredUser.includes(email)){
+            allAppliedEvents.registeredUser = allAppliedEvents.registeredUser.filter(applicant=>applicant.email!=email)
+        }
+        else
+        {
+            return res.status(404).json({ message: "Applicant not found." });
+
+        }
+        await allAppliedEvents.save()
+        return res.status(200).json(allAppliedEvents)
     } catch (err) {
         console.log(err);
         return res.status(401).json(err)

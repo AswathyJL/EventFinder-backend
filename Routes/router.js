@@ -65,4 +65,14 @@ router.get("/event/:id/status",jwtMiddleware,appliedEventController.checkApplySt
 // cancel registration/unapply event
 router.post("/apply-event/:id/remove",jwtMiddleware,appliedEventController.cancelRegistrationController)
 
+// get applied events by user
+router.get("/apply-event/view",jwtMiddleware,appliedEventController.getUserAppliedEvents)
+
+// get applicant details for events
+router.get("/apply-event/:id/details",jwtMiddleware,appliedEventController.getApplicationDetails)
+
+// delete applicant 
+router.post("/apply-event/:id/remove",jwtMiddleware,appliedEventController.removeAnApplicantController)
+
+
 module.exports = router
